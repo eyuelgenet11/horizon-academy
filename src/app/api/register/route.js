@@ -35,6 +35,6 @@ export async function POST(req) {
     return NextResponse.json({ message: 'Account created successfully.', user }, { status: 201 });
   } catch (err) {
     console.error('[REGISTER_ERROR]', err);
-    return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 });
+    return NextResponse.json({ error: err.message || 'Something went wrong. Please try again.' }, { status: 500 });
   }
 }
