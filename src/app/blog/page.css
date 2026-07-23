@@ -1,0 +1,127 @@
+.blog-hero {
+  padding: 5rem 0 3rem;
+  background: radial-gradient(ellipse at 70% 0%, rgba(242, 101, 34, 0.1) 0%, transparent 60%);
+}
+
+.blog-content { padding: 2rem 0 5rem; }
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.blog-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.blog-card:hover { transform: translateY(-4px); }
+
+.blog-card-image { height: 200px; overflow: hidden; }
+.blog-card-image img { width: 100%; height: 100%; object-fit: cover; }
+.blog-card-placeholder { width: 100%; height: 100%; }
+
+.blog-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.blog-date {
+  font-size: 0.78rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.blog-card h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.blog-excerpt {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-read-more {
+  margin-top: auto;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.blog-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  border-radius: var(--radius-lg);
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+/* Blog Post Page */
+.blog-post-page { padding: 2rem 0 5rem; }
+.blog-post-page .container { max-width: 780px; }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-bottom: 2rem;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+.post-header { margin-bottom: 2rem; }
+
+.post-hero-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
+}
+
+.post-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0.5rem 0;
+}
+
+.post-excerpt {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.post-content {
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.post-content h2, .post-content h3 { margin: 1.5rem 0 0.75rem; font-weight: 700; }
+.post-content p { margin-bottom: 1rem; color: var(--text-muted); }
+.post-content ul, .post-content ol { padding-left: 1.5rem; margin-bottom: 1rem; color: var(--text-muted); }

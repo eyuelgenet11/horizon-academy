@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("STUDENT") // STUDENT or ADMIN
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  enrollments  Enrollment[]
+  progress     Progress[]
+  transactions Transaction[]
+  certificates Certificate[]
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  level       String
+  duration    String
+  imageUrl    String?
+  price       Float    @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  lessons      Lesson[]
+  enrollments  Enrollment[]
+  transactions Transaction[]
+  certificates Certificate[]
+}
+
+model Lesson {
+  id       String  @id @default(cuid())
+  title    String
+  videoUrl String?
+  audioUrl String?
+  pdfUrl   String?
+  content  String?
+  order    Int     @default(0)
+  courseId String
+  course   Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  progress Progress[]
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  status    String   @default("ACTIVE") // ACTIVE, COMPLETED, CANCELLED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+model Progress {
+  id          String    @id @default(cuid())
+  userId      String
+  lessonId    String
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+}
+
+model Transaction {
+  id            String   @id @default(cuid())
+  userId        String
+  courseId      String
+  amount        Float
+  currency      String   @default("ETB")
+  status        String   @default("PENDING") // PENDING, SUCCESS, FAILED
+  paymentMethod String?
+  reference     String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+}
+
+model Certificate {
+  id             String   @id @default(cuid())
+  userId         String
+  courseId       String
+  certificateUrl String?
+  issuedAt       DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId])
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  imageUrl    String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactInquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  status    String   @default("UNREAD") // UNREAD, READ, REPLIED
+  createdAt DateTime @default(now())
+}
+

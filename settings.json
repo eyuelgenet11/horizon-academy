@@ -1,0 +1,14 @@
+{
+  "chapaStatus": "ACTIVE",
+  "mode": "LIVE",
+  "businessLicense": {
+    "name": "mock_license.pdf",
+    "size": 1048576,
+    "uploadedAt": "2026-07-14T00:31:07.000Z"
+  },
+  "proofOfAddress": {
+    "name": "mock_address.pdf",
+    "size": 1048576,
+    "uploadedAt": "2026-07-14T00:31:07.000Z"
+  }
+}

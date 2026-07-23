@@ -1,0 +1,242 @@
+.checkout-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #120c1f 0%, #0d0914 100%);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.checkout-container {
+  width: 100%;
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .checkout-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Section: Order details */
+.checkout-order-summary {
+  background: rgba(255, 255, 255, 0.02);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .checkout-order-summary {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+.chapa-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #f26522; /* Chapa color orange */
+}
+
+.chapa-brand span.tag {
+  font-size: 0.65rem;
+  background: rgba(242, 101, 34, 0.15);
+  color: #f26522;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.order-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-details h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.order-details p.course-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #f26522;
+  margin-top: 0.25rem;
+}
+
+.order-meta {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.order-meta code {
+  color: #cbd5e1;
+  background: rgba(255,255,255,0.05);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}
+
+.order-price {
+  border-top: 1px dashed rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+}
+
+.order-price .label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.order-price .amount {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 0.25rem;
+}
+
+/* Right Section: Interactive Payment Simulation */
+.checkout-payment-methods {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.checkout-payment-methods h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.payment-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.payment-option-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.01);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-option-card:hover, .payment-option-card.selected {
+  border-color: #f26522;
+  background: rgba(242, 101, 34, 0.05);
+}
+
+.payment-option-card .logo-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.payment-option-card .info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.payment-option-card .info span.name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.payment-option-card .info span.desc {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.simulation-controls {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px dashed rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+}
+
+.btn-success-sim {
+  background: #f26522;
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  padding: 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.btn-success-sim:hover {
+  background: #e05313;
+  transform: translateY(-1px);
+}
+
+.btn-fail-sim {
+  background: transparent;
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  font-weight: 600;
+  padding: 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.btn-fail-sim:hover {
+  background: rgba(248, 113, 113, 0.05);
+  border-color: #f87171;
+}
+
+.back-to-merchant {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.back-to-merchant:hover {
+  color: #ffffff;
+}
