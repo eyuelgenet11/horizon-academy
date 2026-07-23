@@ -6,6 +6,8 @@ import authConfig from './auth.config';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'horizon-academy-super-secret-key-change-me-in-production',
+  trustHost: true,
   providers: [
     Credentials({
       name: 'credentials',
