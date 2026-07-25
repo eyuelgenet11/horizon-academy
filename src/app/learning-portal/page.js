@@ -59,7 +59,7 @@ export default async function LearningPortalPage() {
     <div className="portal-page">
       <section className="portal-hero">
         <div className="container">
-          <h1>Welcome back, <span className="text-gradient">{session.user.name}</span> 👋</h1>
+          <h1>Welcome back, <span className="text-gradient">{session.user.name}</span></h1>
           <p className="portal-subtitle">Track your learning progress and manage your active programs.</p>
         </div>
       </section>
