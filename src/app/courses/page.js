@@ -9,7 +9,7 @@ const DEFAULT_COURSES = [
     level: "Beginner, Intermediate, Advanced",
     duration: "3 Months",
     description: "Master practical communication with our intensive spoken English programs.",
-    price: 0,
+    price: 5,
     imageUrl: "bg-orange"
   },
   {
@@ -17,7 +17,7 @@ const DEFAULT_COURSES = [
     level: "All Levels",
     duration: "6 Weeks",
     description: "Sound more natural and confident by mastering English sounds and rhythm.",
-    price: 0,
+    price: 5,
     imageUrl: "bg-blue"
   },
   {
@@ -25,7 +25,7 @@ const DEFAULT_COURSES = [
     level: "Kids",
     duration: "Ongoing",
     description: "Fun and interactive learning environment for young learners to build a strong foundation.",
-    price: 0,
+    price: 5,
     imageUrl: "bg-green"
   },
   {
@@ -33,7 +33,7 @@ const DEFAULT_COURSES = [
     level: "Intermediate, Advanced",
     duration: "2 Months",
     description: "Comprehensive training to achieve your target band score for study or work abroad.",
-    price: 0,
+    price: 5,
     imageUrl: "bg-purple"
   },
   {
@@ -41,7 +41,7 @@ const DEFAULT_COURSES = [
     level: "Beginner",
     duration: "3 Months",
     description: "Learn the basics of Spanish communication for personal growth.",
-    price: 0,
+    price: 5,
     imageUrl: "bg-red"
   },
   {
@@ -49,7 +49,7 @@ const DEFAULT_COURSES = [
     level: "Basic IT",
     duration: "1 Month",
     description: "Essential computer skills for the modern workplace.",
-    price: 0,
+    price: 5,
     imageUrl: "bg-teal"
   }
 ];

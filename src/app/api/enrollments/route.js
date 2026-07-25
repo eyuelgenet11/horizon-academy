@@ -155,7 +155,17 @@ export async function POST(req) {
       }
     }
 
-    // Fallback: Free or sandbox enrollment when Chapa API is not enabled
+    // STRICT GUARD: Only allow free enrollment for courses with price === 0.
+    // If a paid course reaches this point it means no payment path was taken — block it.
+    if (course.price > 0) {
+      console.warn(`[SECURITY] Paid course enrollment attempt without payment blocked. userId=${session.user.id} courseId=${courseId} price=${course.price}`);
+      return NextResponse.json(
+        { error: 'Payment is required to enroll in this course. Please complete checkout first.' },
+        { status: 402 }
+      );
+    }
+
+    // Free course enrollment — no payment needed
     const enrollment = await prisma.enrollment.create({
       data: { userId: session.user.id, courseId },
     });
