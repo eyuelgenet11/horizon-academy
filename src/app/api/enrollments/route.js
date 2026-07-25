@@ -95,6 +95,17 @@ export async function POST(req) {
           const firstName = nameParts[0] || 'Student';
           const lastName = nameParts[1] || 'User';
 
+          // Compute absolute base URL dynamically from request headers or env configuration
+          const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
+          const proto = req.headers.get('x-forwarded-proto') || (req.nextUrl?.protocol ? req.nextUrl.protocol.replace(':', '') : 'https');
+          const requestOrigin = host ? `${proto}://${host}` : req.nextUrl?.origin;
+
+          let baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || requestOrigin || 'http://localhost:3000';
+          if (baseUrl.includes('localhost') && requestOrigin && !requestOrigin.includes('localhost')) {
+            baseUrl = requestOrigin;
+          }
+          baseUrl = baseUrl.replace(/\/$/, '');
+
           const chapaRes = await fetch('https://api.chapa.co/v1/transaction/initialize', {
             method: 'POST',
             headers: {
@@ -108,8 +119,8 @@ export async function POST(req) {
               first_name: firstName,
               last_name: lastName,
               tx_ref: txRef,
-              callback_url: `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/payments/webhook`,
-              return_url: `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/payments/verify?tx_ref=${txRef}`,
+              callback_url: `${baseUrl}/api/payments/webhook`,
+              return_url: `${baseUrl}/api/payments/verify?tx_ref=${txRef}`,
               customization: {
                 title: course.title,
                 description: `Enrollment for ${course.title} course`,
