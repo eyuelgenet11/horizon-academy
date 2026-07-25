@@ -38,7 +38,7 @@ export default async function CourseDetailPage({ params }) {
         },
       },
     });
-    isEnrolled = !!enrollment;
+    isEnrolled = Boolean(enrollment && enrollment.status === 'ACTIVE');
   }
 
   return (

@@ -27,7 +27,7 @@ export default async function CoursePlayerPage({ params }) {
   const { course, progress, enrollment } = await getCourseData(resolvedParams.courseId, session.user.id);
 
   if (!course) notFound();
-  if (!enrollment) redirect(`/courses`); // Not enrolled
+  if (!enrollment || enrollment.status !== 'ACTIVE') redirect('/courses'); // Strict active enrollment check
 
   const completedIds = new Set(progress.filter((p) => p.completed).map((p) => p.lessonId));
   const completedCount = completedIds.size;

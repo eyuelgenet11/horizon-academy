@@ -8,16 +8,24 @@ export async function POST(req) {
     const signature = req.headers.get('x-chapa-signature') || req.headers.get('chapa-signature');
     const secret = process.env.CHAPA_WEBHOOK_SECRET || process.env.CHAPA_SECRET_KEY;
 
-    // Optional: Verify signature if secret is present
-    if (secret && signature) {
-      const hash = crypto
-        .createHmac('sha256', secret)
+    // Enforce HMAC SHA-256 webhook signature verification when secret is set
+    if (secret) {
+      if (!signature) {
+        console.warn('[CHAPA_WEBHOOK_SECURITY] Missing webhook signature header.');
+        return NextResponse.json({ error: 'Missing signature header' }, { status: 401 });
+      }
+
+      const expectedHash = crypto
+        .createHmac('sha256', secret.trim())
         .update(bodyText)
         .digest('hex');
 
-      if (hash !== signature) {
-        console.warn('[CHAPA_WEBHOOK] Invalid signature match');
-        return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+      const expectedBuf = Buffer.from(expectedHash, 'utf-8');
+      const signatureBuf = Buffer.from(signature, 'utf-8');
+
+      if (expectedBuf.length !== signatureBuf.length || !crypto.timingSafeEqual(expectedBuf, signatureBuf)) {
+        console.warn('[CHAPA_WEBHOOK_SECURITY] Invalid webhook signature match.');
+        return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
       }
     }
 
@@ -35,11 +43,6 @@ export async function POST(req) {
       });
 
       if (transaction && transaction.status === 'PENDING') {
-        const allCourses = await prisma.course.findMany({
-          where: { isPublished: true },
-          select: { id: true },
-        });
-
         await prisma.$transaction([
           prisma.transaction.update({
             where: { id: transaction.id },
@@ -48,26 +51,25 @@ export async function POST(req) {
               paymentMethod: payload.method || 'Chapa',
             },
           }),
-          ...allCourses.map((c) =>
-            prisma.enrollment.upsert({
-              where: {
-                userId_courseId: {
-                  userId: transaction.userId,
-                  courseId: c.id,
-                },
-              },
-              create: {
+          // Enroll user ONLY in the specific course they paid for
+          prisma.enrollment.upsert({
+            where: {
+              userId_courseId: {
                 userId: transaction.userId,
-                courseId: c.id,
-                status: 'ACTIVE',
+                courseId: transaction.courseId,
               },
-              update: {
-                status: 'ACTIVE',
-              },
-            })
-          ),
+            },
+            create: {
+              userId: transaction.userId,
+              courseId: transaction.courseId,
+              status: 'ACTIVE',
+            },
+            update: {
+              status: 'ACTIVE',
+            },
+          }),
         ]);
-        console.log(`[CHAPA_WEBHOOK] Transaction ${txRef} marked as SUCCESS & user enrolled in ALL courses.`);
+        console.log(`[CHAPA_WEBHOOK] Transaction ${txRef} marked as SUCCESS & user enrolled in single course ${transaction.courseId}.`);
       }
     }
 

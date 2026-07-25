@@ -13,16 +13,22 @@ export async function GET(req) {
     const isMock = txRef.startsWith('mock-');
     let paymentMethod = 'Chapa Sandbox';
 
-    if (!isMock) {
+    // In production, block mock transactions unless running in development/sandbox mode
+    if (isMock) {
+      if (process.env.NODE_ENV === 'production' && !process.env.ALLOW_MOCK_PAYMENTS) {
+        console.warn(`[SECURITY_ALERT] Mock payment verification attempt blocked in production: ${txRef}`);
+        return NextResponse.redirect(new URL('/courses?error=payment_failed', req.url));
+      }
+    } else {
       if (!process.env.CHAPA_SECRET_KEY) {
         return NextResponse.redirect(new URL('/courses?error=chapa_not_configured', req.url));
       }
 
-      // Verify transaction status with Chapa
+      // Verify transaction status directly with Chapa API
       const chapaRes = await fetch(`https://api.chapa.co/v1/transaction/verify/${txRef}`, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${process.env.CHAPA_SECRET_KEY}`,
+          Authorization: `Bearer ${process.env.CHAPA_SECRET_KEY.trim()}`,
         },
       });
 
@@ -36,7 +42,7 @@ export async function GET(req) {
       paymentMethod = chapaData.data.payment_method || 'Chapa';
     }
 
-    // Find the pending transaction in SQLite
+    // Find the pending transaction record in SQLite
     const transaction = await prisma.transaction.findUnique({
       where: { reference: txRef },
     });
@@ -45,45 +51,39 @@ export async function GET(req) {
       return NextResponse.redirect(new URL('/courses?error=transaction_not_found', req.url));
     }
 
-    // Process enrollment if the transaction was pending
+    // Process enrollment ONLY for the single course paid for in this transaction
     if (transaction.status === 'PENDING') {
-      const allCourses = await prisma.course.findMany({
-        where: { isPublished: true },
-        select: { id: true },
-      });
-
       await prisma.$transaction([
-        // Update transaction status
+        // Update transaction status to SUCCESS
         prisma.transaction.update({
           where: { id: transaction.id },
           data: { status: 'SUCCESS', paymentMethod },
         }),
-        // Enroll user in ALL courses for 5 Birr payment
-        ...allCourses.map((c) =>
-          prisma.enrollment.upsert({
-            where: {
-              userId_courseId: {
-                userId: transaction.userId,
-                courseId: c.id,
-              },
-            },
-            create: {
+        // Enroll user ONLY in the specific course they purchased
+        prisma.enrollment.upsert({
+          where: {
+            userId_courseId: {
               userId: transaction.userId,
-              courseId: c.id,
-              status: 'ACTIVE',
+              courseId: transaction.courseId,
             },
-            update: {
-              status: 'ACTIVE',
-            },
-          })
-        ),
+          },
+          create: {
+            userId: transaction.userId,
+            courseId: transaction.courseId,
+            status: 'ACTIVE',
+          },
+          update: {
+            status: 'ACTIVE',
+          },
+        }),
       ]);
+      console.log(`[PAYMENT_SUCCESS] User ${transaction.userId} successfully enrolled in course ${transaction.courseId}`);
     }
 
-    // Redirect student successfully to learning portal course overview
-    return NextResponse.redirect(new URL(`/learning-portal/${transaction.courseId}?payment=success`, req.url));
+    // Redirect student directly to their newly unlocked course in the learning portal
+    return NextResponse.redirect(new URL(`/learning-portal/${transaction.courseId}`, req.url));
   } catch (err) {
-    console.error('[PAYMENT_VERIFY_GET]', err);
-    return NextResponse.redirect(new URL('/courses?error=verification_error', req.url));
+    console.error('[PAYMENTS_VERIFY_ERROR]', err);
+    return NextResponse.redirect(new URL('/courses?error=server_error', req.url));
   }
 }
