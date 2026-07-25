@@ -122,8 +122,8 @@ export async function POST(req) {
               callback_url: `${baseUrl}/api/payments/webhook`,
               return_url: `${baseUrl}/api/payments/verify?tx_ref=${txRef}`,
               customization: {
-                title: course.title,
-                description: `Enrollment for ${course.title} course`,
+                title: course.title.length <= 16 ? course.title : course.title.slice(0, 16),
+                description: `Enrollment for ${course.title}`.slice(0, 50),
               },
             }),
           });
