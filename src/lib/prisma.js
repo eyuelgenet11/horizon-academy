@@ -7,11 +7,21 @@ import fs from 'fs';
 
 const globalForPrisma = globalThis;
 
-function createPrismaClient() {
-  const dbUrl = process.env.DATABASE_URL || '';
-  const authToken = process.env.TURSO_AUTH_TOKEN || process.env.TURSO_AUTH_KEY;
+const DEFAULT_TURSO_URL = 'libsql://horizon-eyuel.aws-ap-northeast-1.turso.io';
+const DEFAULT_TURSO_TOKEN = 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3ODQ5NjY3NjYsImlkIjoiMDE5Zjk4NDYtOGIwMS03MWFlLWE1NTEtMzJmMDI5ODU1M2Q2Iiwia2lkIjoiRmgtVlg5TGctRHhzX0ZjOC1EdktsNVRrN1M4amNweFdIc3hQWTdfT0pVRSIsInJpZCI6IjY4YjIxYWIzLTY0OGEtNDQwOC1iN2ViLTk3NTk1Y2JhODg4NyJ9.DNixvRz7kVaTIQm_Oa7KAnWPkCJjY998Bgf0gPYlt3tObOwcgQPkEvmPWbbGrd95wozz73CXPby69CdRYTi0AQ';
 
-  // 1. Check if Turso cloud credentials/URL are present
+function createPrismaClient() {
+  let dbUrl = process.env.DATABASE_URL || '';
+  let authToken = process.env.TURSO_AUTH_TOKEN || process.env.TURSO_AUTH_KEY || '';
+
+  // 1. If running in Production or Vercel, ensure process.env.DATABASE_URL is set so Prisma Engine never receives 'undefined'
+  if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+    if (!dbUrl) dbUrl = DEFAULT_TURSO_URL;
+    if (!authToken) authToken = DEFAULT_TURSO_TOKEN;
+    process.env.DATABASE_URL = dbUrl;
+  }
+
+  // 2. Check if Turso cloud credentials or URL are present
   const isTurso = 
     Boolean(authToken) || 
     dbUrl.startsWith('libsql://') || 
@@ -21,45 +31,21 @@ function createPrismaClient() {
   if (isTurso) {
     const tursoUrl = (dbUrl.startsWith('libsql://') || dbUrl.startsWith('https://'))
       ? dbUrl
-      : 'libsql://horizon-eyuel.aws-ap-northeast-1.turso.io';
+      : DEFAULT_TURSO_URL;
+
+    const tokenToUse = authToken || DEFAULT_TURSO_TOKEN;
 
     const libsql = createClient({
       url: tursoUrl,
-      authToken: authToken,
+      authToken: tokenToUse,
     });
     const adapter = new PrismaLibSql(libsql);
     return new PrismaClient({ adapter });
   }
 
-  // 2. Serverless / Production Fallback (safe copy to writable tmp directory)
-  if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
-    const tmpDir = process.env.VERCEL ? '/tmp' : path.join(process.cwd(), '.next', 'cache');
-    if (!fs.existsSync(tmpDir)) {
-      try {
-        fs.mkdirSync(tmpDir, { recursive: true });
-      } catch (_) {}
-    }
-
-    const tmpDbPath = path.join(tmpDir, 'dev.db');
-    const sourceDbPath = path.join(process.cwd(), 'dev.db');
-
-    if (!fs.existsSync(tmpDbPath)) {
-      try {
-        if (fs.existsSync(sourceDbPath)) {
-          fs.copyFileSync(sourceDbPath, tmpDbPath);
-        } else {
-          fs.writeFileSync(tmpDbPath, '');
-        }
-      } catch (err) {
-        console.error('[PRISMA_TMP_DB_ERR]', err);
-      }
-    }
-    const adapter = new PrismaBetterSqlite3({ url: `file:${tmpDbPath}` });
-    return new PrismaClient({ adapter });
-  }
-
-  // 3. Local Development Fallback using absolute path
+  // 3. Fallback for local development using SQLite file:./dev.db
   const localDbPath = path.join(process.cwd(), 'dev.db');
+  process.env.DATABASE_URL = `file:${localDbPath}`;
   const adapter = new PrismaBetterSqlite3({ url: `file:${localDbPath}` });
   return new PrismaClient({ adapter });
 }
