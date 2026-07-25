@@ -1,27 +1,31 @@
+import path from 'path';
+
+const DEFAULT_TURSO_URL = 'libsql://horizon-eyuel.aws-ap-northeast-1.turso.io';
+const DEFAULT_TURSO_TOKEN = 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3ODQ5NjY3NjYsImlkIjoiMDE5Zjk4NDYtOGIwMS03MWFlLWE1NTEtMzJmMDI5ODU1M2Q2Iiwia2lkIjoiRmgtVlg5TGctRHhzX0ZjOC1EdktsNVRrN1M4amNweFdIc3hQWTdfT0pVRSIsInJpZCI6IjY4YjIxYWIzLTY4OGEtNDQwOC1iN2ViLTk3NTk1Y2JhODg4NyJ9.DNixvRz7kVaTIQm_Oa7KAnWPkCJjY998Bgf0gPYlt3tObOwcgQPkEvmPWbbGrd95wozz73CXPby69CdRYTi0AQ';
+
+// GUARANTEE process.env.DATABASE_URL IS ALWAYS A VALID URL BEFORE PRISMA CLIENT INITIALIZATION
+if (!process.env.DATABASE_URL || process.env.DATABASE_URL === 'undefined') {
+  if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+    process.env.DATABASE_URL = DEFAULT_TURSO_URL;
+  } else {
+    process.env.DATABASE_URL = `file:${path.join(process.cwd(), 'dev.db')}`;
+  }
+}
+
+if (!process.env.TURSO_AUTH_TOKEN && (process.env.VERCEL || process.env.NODE_ENV === 'production')) {
+  process.env.TURSO_AUTH_TOKEN = DEFAULT_TURSO_TOKEN;
+}
+
 import { PrismaClient } from '@prisma/client';
 import { PrismaLibSql } from '@prisma/adapter-libsql';
-import { createClient } from '@libsql/client';
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
-import path from 'path';
-import fs from 'fs';
 
 const globalForPrisma = globalThis;
 
-const DEFAULT_TURSO_URL = 'libsql://horizon-eyuel.aws-ap-northeast-1.turso.io';
-const DEFAULT_TURSO_TOKEN = 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3ODQ5NjY3NjYsImlkIjoiMDE5Zjk4NDYtOGIwMS03MWFlLWE1NTEtMzJmMDI5ODU1M2Q2Iiwia2lkIjoiRmgtVlg5TGctRHhzX0ZjOC1EdktsNVRrN1M4amNweFdIc3hQWTdfT0pVRSIsInJpZCI6IjY4YjIxYWIzLTY0OGEtNDQwOC1iN2ViLTk3NTk1Y2JhODg4NyJ9.DNixvRz7kVaTIQm_Oa7KAnWPkCJjY998Bgf0gPYlt3tObOwcgQPkEvmPWbbGrd95wozz73CXPby69CdRYTi0AQ';
-
 function createPrismaClient() {
-  let dbUrl = process.env.DATABASE_URL || '';
-  let authToken = process.env.TURSO_AUTH_TOKEN || process.env.TURSO_AUTH_KEY || '';
+  const dbUrl = process.env.DATABASE_URL || '';
+  const authToken = process.env.TURSO_AUTH_TOKEN || process.env.TURSO_AUTH_KEY || '';
 
-  // 1. If running in Production or Vercel, ensure process.env.DATABASE_URL is set so Prisma Engine never receives 'undefined'
-  if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
-    if (!dbUrl) dbUrl = DEFAULT_TURSO_URL;
-    if (!authToken) authToken = DEFAULT_TURSO_TOKEN;
-    process.env.DATABASE_URL = dbUrl;
-  }
-
-  // 2. Check if Turso cloud credentials or URL are present
   const isTurso = 
     Boolean(authToken) || 
     dbUrl.startsWith('libsql://') || 
@@ -35,15 +39,13 @@ function createPrismaClient() {
 
     const tokenToUse = authToken || DEFAULT_TURSO_TOKEN;
 
-    const libsql = createClient({
+    const adapter = new PrismaLibSql({
       url: tursoUrl,
       authToken: tokenToUse,
     });
-    const adapter = new PrismaLibSql(libsql);
     return new PrismaClient({ adapter });
   }
 
-  // 3. Fallback for local development using SQLite file:./dev.db
   const localDbPath = path.join(process.cwd(), 'dev.db');
   process.env.DATABASE_URL = `file:${localDbPath}`;
   const adapter = new PrismaBetterSqlite3({ url: `file:${localDbPath}` });
