@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
@@ -38,7 +39,8 @@ export default function Navbar() {
     <nav className="navbar glass">
       <div className="container navbar-container">
         <Link href="/" className="navbar-logo">
-          <span className="text-gradient">Horizon</span> Academy
+          <Image src="/logo.png" alt="Horizon Academy Logo" width={42} height={26} style={{ objectFit: 'contain' }} priority />
+          <span className="logo-text"><span className="text-gradient">Horizon</span> Center</span>
         </Link>
 
         <div className={`navbar-links ${isOpen ? 'active' : ''}`}>
@@ -61,6 +63,35 @@ export default function Navbar() {
               Admin
             </Link>
           )}
+
+          {/* Mobile Actions (Language, Login/Register or Dashboard/Logout) */}
+          <div className="mobile-only-actions">
+            <button onClick={toggleLanguage} className="btn-lang-toggle w-full" aria-label="Toggle Language">
+              🌐 {locale === 'en' ? 'አማርኛ' : 'English'}
+            </button>
+            {session ? (
+              <div className="mobile-action-btns">
+                <Link
+                  href="/learning-portal"
+                  className={`btn ${isActive('/learning-portal') ? 'btn-primary' : 'btn-outline'} w-full`}
+                  onClick={close}
+                >
+                  {t('nav.myDashboard')}
+                </Link>
+                <button
+                  className="btn btn-primary w-full"
+                  onClick={() => { close(); signOut({ callbackUrl: '/' }); }}
+                >
+                  {t('nav.logout')}
+                </button>
+              </div>
+            ) : (
+              <div className="mobile-action-btns">
+                <Link href="/login" className="btn btn-outline" onClick={close}>{t('nav.login')}</Link>
+                <Link href="/register" className="btn btn-primary" onClick={close}>{t('nav.enrollNow')}</Link>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="navbar-actions">

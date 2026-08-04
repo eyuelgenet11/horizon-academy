@@ -15,12 +15,16 @@
 }
 
 .navbar-logo {
-  font-size: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-color);
   letter-spacing: -0.02em;
   white-space: nowrap;
   transition: transform var(--transition-fast);
+  text-decoration: none;
 }
 
 .navbar-logo:hover {
@@ -111,6 +115,10 @@
   padding: 0.4rem;
 }
 
+.mobile-only-actions {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   .navbar-links {
     display: none;
@@ -124,6 +132,8 @@
     gap: 0.5rem;
     box-shadow: var(--shadow-lg);
     border-bottom: 1px solid var(--border-color);
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
   }
 
   .navbar-links.active {
@@ -144,6 +154,38 @@
   .mobile-menu-btn {
     display: block;
   }
+
+  .mobile-only-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .mobile-action-btns {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .mobile-action-btns .btn {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    font-size: 1.15rem;
+    gap: 0.4rem;
+  }
+
+  .mobile-action-btns {
+    flex-direction: column;
+  }
 }
 
 .btn-lang-toggle {
@@ -157,6 +199,7 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.3rem;
   white-space: nowrap;
   transition: all var(--transition-fast);
@@ -168,3 +211,4 @@
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
+

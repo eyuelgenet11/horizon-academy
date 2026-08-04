@@ -7,6 +7,7 @@ const RegisterSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
+  learningMode: z.string().optional().default('online'),
 });
 
 export async function POST(req) {
@@ -18,7 +19,7 @@ export async function POST(req) {
       return NextResponse.json({ error: parsed.error.errors[0].message }, { status: 400 });
     }
 
-    const { name, email, password } = parsed.data;
+    const { name, email, password, learningMode } = parsed.data;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
@@ -27,10 +28,19 @@ export async function POST(req) {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = await prisma.user.create({
-      data: { name, email, password: hashedPassword, role: 'STUDENT' },
-      select: { id: true, name: true, email: true, role: true },
-    });
+    let user;
+    try {
+      user = await prisma.user.create({
+        data: { name, email, password: hashedPassword, role: 'STUDENT', learningMode: learningMode || 'online' },
+        select: { id: true, name: true, email: true, role: true, learningMode: true },
+      });
+    } catch (createErr) {
+      console.warn('[REGISTER_FALLBACK] Column learningMode may not exist in target DB, creating standard user:', createErr.message);
+      user = await prisma.user.create({
+        data: { name, email, password: hashedPassword, role: 'STUDENT' },
+        select: { id: true, name: true, email: true, role: true },
+      });
+    }
 
     return NextResponse.json({ message: 'Account created successfully.', user }, { status: 201 });
   } catch (err) {

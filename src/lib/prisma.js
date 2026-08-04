@@ -26,11 +26,13 @@ function createPrismaClient() {
   const dbUrl = process.env.DATABASE_URL || '';
   const authToken = process.env.TURSO_AUTH_TOKEN || process.env.TURSO_AUTH_KEY || '';
 
+  const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+  const isTursoExplicit = process.env.USE_TURSO === 'true';
+
   const isTurso = 
-    Boolean(authToken) || 
-    dbUrl.startsWith('libsql://') || 
-    dbUrl.startsWith('https://') || 
-    dbUrl.includes('turso.io');
+    isProduction || 
+    isTursoExplicit || 
+    (dbUrl.startsWith('libsql://') && !dbUrl.includes('localhost'));
 
   if (isTurso) {
     const tursoUrl = (dbUrl.startsWith('libsql://') || dbUrl.startsWith('https://'))

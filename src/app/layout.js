@@ -6,31 +6,33 @@ import Providers from '@/components/Providers';
 
 export const metadata = {
   title: {
-    default: 'Horizon Foreign Languages Academy',
-    template: '%s | Horizon Academy',
+    default: 'Horizon Center of Foreign Languages and Computer Training',
+    template: '%s | Horizon Center',
   },
   description:
-    'Horizon Foreign Languages Academy — Master practical English, IELTS, Spanish, and more through expert-led, interactive training in Ethiopia.',
+    'Horizon Center of Foreign Languages and Computer Training — Leading educational institution in Ethiopia for Spoken English, IELTS, and practical computer skills training. Let Your Tongue Be Your Weapon.',
   keywords: [
+    'Horizon Center of Foreign Languages and Computer Training',
     'English training Ethiopia',
-    'IELTS preparation Addis Ababa',
-    'language academy Ethiopia',
+    'Computer training Addis Ababa',
+    'Computer training Bahir Dar',
+    'IELTS preparation Ethiopia',
     'spoken English course',
-    'Horizon Academy',
-    'ሆራይዘን የቋንቋ ት/ቤት',
+    'ሆራይዘን የውጭ ቋንቋዎችና ኮምፒውተር ስልጠና ማዕከል',
+    'Getachew Marie Bogale',
   ],
   openGraph: {
-    title: 'Horizon Foreign Languages Academy',
-    description: 'Let Your Tongue Be Your Weapon — expert language training in Ethiopia.',
+    title: 'Horizon Center of Foreign Languages and Computer Training',
+    description: 'Let Your Tongue Be Your Weapon — Quality foreign language and computer skills training in Ethiopia (Addis Ababa & Bahir Dar).',
     url: 'https://horizonacademy.et',
-    siteName: 'Horizon Academy',
+    siteName: 'Horizon Center',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Horizon Foreign Languages Academy',
-    description: 'Expert language training in Ethiopia. Enroll today.',
+    title: 'Horizon Center of Foreign Languages and Computer Training',
+    description: 'Empowering individuals through quality language education and practical computer skills training in Ethiopia. Enroll today.',
   },
   robots: { index: true, follow: true },
 };
@@ -48,7 +50,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main>{children}</main>
           <Footer />
-          <WhatsAppButton phoneNumber="251911000000" />
+          <WhatsAppButton phoneNumber="251977787358" />
         </Providers>
       </body>
     </html>

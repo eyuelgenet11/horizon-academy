@@ -45,37 +45,66 @@ export default function ContactPage() {
             <div className="info-card glass">
               <div className="info-icon">📍</div>
               <div>
-                <h3>Our Location</h3>
-                <p>Addis Ababa, Ethiopia</p>
+                <h3>Physical Campuses & Office Locations</h3>
+                <p style={{ marginTop: '0.4rem' }}>
+                  <strong>Addis Ababa Campus:</strong><br />
+                  Megenagna Metebaber Building, 5th Floor, Room #513 & 7th Floor<br />
+                  <span style={{ fontSize: '0.82rem', color: 'var(--color-primary)' }}>(መገናኛ - መተባበር ህንፃ 5ኛ ፎቅ/ቢ.ቁ 513)</span>
+                </p>
+                <p style={{ marginTop: '0.6rem' }}>
+                  <strong>Bahir Dar Campus:</strong><br />
+                  Around Papyrus, Next to Signal Mall, Millennium Building 1st Floor & 7th Floor<br />
+                  <span style={{ fontSize: '0.82rem', color: 'var(--color-primary)' }}>(ባሕር ዳር - ገበያ ሲግናል ሞል ጎን ሚሊኒየም ህንፃ 1ኛ ፎቅ)</span>
+                </p>
               </div>
             </div>
             <div className="info-card glass">
               <div className="info-icon">📞</div>
               <div>
-                <h3>Phone</h3>
-                <a href="tel:+251911000000">+251 911 000 000</a>
+                <h3>Phone Numbers</h3>
+                <p><a href="tel:+251989795758">+251 989 795 758</a></p>
+                <p style={{ marginTop: '0.2rem' }}><a href="tel:+251977785758">+251 977 785 758</a></p>
+              </div>
+            </div>
+            <div className="info-card glass">
+              <div className="info-icon">💬</div>
+              <div>
+                <h3>WhatsApp Business</h3>
+                <a href="https://wa.me/251977787358" target="_blank" rel="noopener noreferrer">+251 977 787 358</a>
               </div>
             </div>
             <div className="info-card glass">
               <div className="info-icon">✉️</div>
               <div>
-                <h3>Email</h3>
-                <a href="mailto:info@horizonacademy.et">info@horizonacademy.et</a>
+                <h3>Primary Contact Email</h3>
+                <a href="mailto:gechhorizon16@gmail.com">gechhorizon16@gmail.com</a>
               </div>
             </div>
             <div className="info-card glass">
               <div className="info-icon">🕐</div>
               <div>
-                <h3>Working Hours</h3>
-                <p>Monday – Saturday: 8AM – 6PM</p>
+                <h3>Working / Office Hours</h3>
+                <p><strong>24/7</strong> (Always open for student inquiries and online support)</p>
               </div>
             </div>
 
             {/* Dynamic Map embed */}
-            <div className="map-iframe-container glass">
+            <div className="map-iframe-container glass" style={{ padding: '1rem' }}>
+              <div style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <h4 style={{ margin: 0, fontSize: '0.95rem' }}>📍 Google Maps Location</h4>
+                <a
+                  href="https://maps.app.goo.gl/SFhvjZTYpcrt16Rw7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{ fontSize: '0.8rem', padding: '0.35rem 0.8rem' }}
+                >
+                  Open in Google Maps ↗
+                </a>
+              </div>
               <iframe
-                title="Horizon Foreign Languages Academy Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126131.64205562817!2d38.706240212726715!3d9.01918342795493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037a24d49!2sAddis%20Ababa%2C%20Ethiopia!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                title="Horizon Center of Foreign Languages and Computer Training Map"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.5471928929766!2d38.7997!3d9.0185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037a24d49!2sMegenagna%2C%20Addis%20Ababa!5e0!3m2!1sen!2set!4v1700000000000!5m2!1sen!2set"
                 width="100%"
                 height="220"
                 style={{ border: 0, borderRadius: 'var(--radius-lg)' }}

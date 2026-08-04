@@ -12,9 +12,11 @@ const ddl = [
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     role TEXT NOT NULL DEFAULT 'STUDENT',
+    learningMode TEXT NOT NULL DEFAULT 'online',
     createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
   );`,
+  `ALTER TABLE "User" ADD COLUMN "learningMode" TEXT NOT NULL DEFAULT 'online';`,
   `CREATE TABLE IF NOT EXISTS "Course" (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,

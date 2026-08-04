@@ -7,13 +7,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      String   @default("STUDENT") // STUDENT or ADMIN
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  password     String
+  role         String   @default("STUDENT") // STUDENT or ADMIN
+  learningMode String   @default("online") // online, in_person_addis, in_person_bahirdar
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   enrollments  Enrollment[]
   progress     Progress[]

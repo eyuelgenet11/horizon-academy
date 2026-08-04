@@ -42,8 +42,17 @@ function CheckoutForm() {
             <p className="course-title">{courseTitle}</p>
             <div className="order-meta">
               <div>Ref: <code>{txRef}</code></div>
-              <div>Merchant: <strong>Horizon Academy</strong></div>
+              <div>Merchant: <strong>Horizon Center</strong></div>
               <div>Currency: <strong>ETB</strong></div>
+            </div>
+
+            <div style={{ marginTop: '1.5rem', background: 'rgba(255, 255, 255, 0.05)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem', color: 'var(--color-primary, #f26522)' }}>🏦 CBE Direct Bank Transfer</h4>
+              <p style={{ margin: 0, fontSize: '0.8rem', lineHeight: '1.5' }}>
+                Account: <strong>1000311734249</strong><br />
+                Name: <strong>Getachew Marie</strong><br />
+                Bank: Commercial Bank of Ethiopia (CBE)
+              </p>
             </div>
           </div>
         </div>

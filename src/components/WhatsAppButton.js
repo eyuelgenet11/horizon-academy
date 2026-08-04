@@ -1,7 +1,7 @@
 'use client';
 import './WhatsAppButton.css';
 
-export default function WhatsAppButton({ phoneNumber = '251911000000', message = 'Hello! I am interested in Horizon Academy.' }) {
+export default function WhatsAppButton({ phoneNumber = '251977787358', message = 'Hello! I am interested in Horizon Center of Foreign Languages and Computer Training.' }) {
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
