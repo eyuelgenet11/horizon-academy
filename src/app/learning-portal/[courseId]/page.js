@@ -20,10 +20,9 @@ async function getCourseData(courseId, userId) {
 }
 
 export default async function CoursePlayerPage({ params }) {
-  const session = await auth();
-  if (!session) redirect('/login');
-
   const resolvedParams = await params;
+  const session = await auth();
+  if (!session) redirect(`/login?callbackUrl=/learning-portal/${resolvedParams.courseId}`);
   const { course, progress, enrollment } = await getCourseData(resolvedParams.courseId, session.user.id);
 
   if (!course) notFound();

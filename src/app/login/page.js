@@ -1,12 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import './page.css';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/learning-portal';
+
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -29,60 +32,69 @@ export default function LoginPage() {
     if (result?.error) {
       setError('Invalid email or password. Please try again.');
     } else {
-      router.push('/learning-portal');
+      router.push(callbackUrl);
       router.refresh();
     }
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card glass">
-        <div className="auth-header">
-          <h1 className="auth-title">Welcome <span className="text-gradient">Back</span></h1>
-          <p className="auth-subtitle">Sign in to access your learning dashboard.</p>
+    <div className="auth-card glass">
+      <div className="auth-header">
+        <h1 className="auth-title">Welcome <span className="text-gradient">Back</span></h1>
+        <p className="auth-subtitle">Sign in to access your learning dashboard.</p>
+      </div>
+
+      {error && <div className="auth-error">{error}</div>}
+
+      <form onSubmit={handleSubmit} className="auth-form">
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={handleChange}
+            required
+            autoComplete="email"
+          />
         </div>
 
-        {error && <div className="auth-error">{error}</div>}
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            value={form.password}
+            onChange={handleChange}
+            required
+            autoComplete="current-password"
+          />
+        </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={form.email}
-              onChange={handleChange}
-              required
-              autoComplete="email"
-            />
-          </div>
+        <button type="submit" className="btn btn-primary w-full" disabled={loading}>
+          {loading ? 'Signing in…' : 'Sign In'}
+        </button>
+      </form>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              autoComplete="current-password"
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary w-full" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign In'}
-          </button>
-        </form>
-
-        <p className="auth-footer-text">
-          Don&apos;t have an account?{' '}
-          <Link href="/register" className="auth-link">Create one free</Link>
-        </p>
-      </div>
+      <p className="auth-footer-text">
+        Don&apos;t have an account?{' '}
+        <Link href={`/register${callbackUrl ? `?callbackUrl=${encodeURIComponent(callbackUrl)}` : ''}`} className="auth-link">Create one free</Link>
+      </p>
     </div>
   );
 }
+
+export default function LoginPage() {
+  return (
+    <div className="auth-page">
+      <Suspense fallback={<div className="auth-card glass" style={{ padding: '2rem', textAlign: 'center' }}><p>Loading...</p></div>}>
+        <LoginForm />
+      </Suspense>
+    </div>
+  );
+}
+
