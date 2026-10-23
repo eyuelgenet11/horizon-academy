@@ -1,89 +1,458 @@
-/* Hero Section */
-.hero {
-  min-height: auto;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  padding: 4rem 0 3rem 0;
+/* ==========================================================================
+   Horizon Academy - Simple Coursera-Inspired Landing Page
+   Exact Coursera Layout, Preserving Horizon Brand Colors & Content
+   ========================================================================== */
+
+/* Main Page Container */
+.coursera-simple-page {
+  overflow-x: hidden;
 }
 
-.hero::before {
+/* ==========================================================================
+   1. Coursera-Style Solid Hero Banner
+   ========================================================================== */
+.coursera-hero-section {
+  padding: 1.5rem 0 2rem 0;
+}
+
+.coursera-hero-card {
+  background: linear-gradient(135deg, #F26522 0%, #D85213 100%);
+  border-radius: 20px;
+  padding: 3.5rem 4rem;
+  display: grid;
+  grid-template-columns: 1.25fr 0.85fr;
+  align-items: center;
+  gap: 3rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(242, 101, 34, 0.22);
+}
+
+/* Subtle decorative wave behind text */
+.coursera-hero-card::after {
   content: '';
   position: absolute;
   top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at center, rgba(242, 101, 34, 0.1) 0%, transparent 50%);
-  z-index: -1;
-  animation: rotate 30s linear infinite;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.hero-content {
-  max-width: 850px;
-  margin: 0 auto;
-}
-
-.hero-title {
-  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
-  line-height: 1.15;
-  font-weight: 800;
+/* Brand Logo Mark on Hero: horizon PLUS */
+.coursera-brand-mark {
+  display: inline-flex;
+  align-items: center;
   margin-bottom: 1.25rem;
 }
 
-.hero-subtitle {
-  font-size: 1.15rem;
-  color: var(--text-muted);
-  margin: 0 auto 2rem auto;
-  max-width: 620px;
-  line-height: 1.6;
+.brand-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 0.85rem;
+.brand-plus-box {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  border: 2px solid #FFFFFF;
+  border-radius: 5px;
+  padding: 1px 7px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #FFFFFF;
+  margin-left: 0.5rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+/* Bold 2-Line Headline */
+.coursera-hero-heading {
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin: 0 0 1.25rem 0;
+  letter-spacing: -0.02em;
+}
+
+/* Concise Subtitle */
+.coursera-hero-desc {
+  font-size: 1.08rem;
+  color: rgba(255, 255, 255, 0.94);
+  line-height: 1.6;
+  max-width: 540px;
+  margin: 0 0 2.25rem 0;
+}
+
+/* Hero Action Row: Solid White Button + Clean Link */
+.coursera-hero-action-row {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
   flex-wrap: wrap;
 }
 
-/* Controlled Hero Banner Image */
-.hero-banner-wrap {
-  max-width: 560px;
-  margin: 2rem auto 0 auto;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.btn-coursera-white {
+  background: #FFFFFF;
+  color: #D85213;
+  font-size: 1.02rem;
+  font-weight: 700;
+  padding: 0.9rem 2.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-coursera-white:hover {
+  background: #F8F9FA;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
+
+.coursera-hero-link {
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.96rem;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.coursera-hero-link:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+/* Right Column: Clean Student Frame */
+.coursera-hero-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coursera-student-frame {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.hero-banner-wrap:hover {
-  transform: translateY(-3px);
-}
-
-.hero-banner-img {
+.coursera-student-img {
   width: 100%;
   height: auto;
-  max-height: 320px;
-  object-fit: cover;
   display: block;
+  object-fit: cover;
 }
 
-/* Sections */
+/* ==========================================================================
+   2. Horizon Learning Concept Row (Online & In-Person)
+   ========================================================================= */
+.coursera-partners-section {
+  padding: 2.25rem 0 1.5rem 0;
+}
+
+.learning-concept-header {
+  margin-bottom: 1.25rem;
+}
+
+.coursera-partners-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 0.25rem;
+}
+
+.learning-concept-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.coursera-partners-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
+}
+
+.coursera-partner-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-full);
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.coursera-partner-chip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(242, 101, 34, 0.15);
+}
+
+.partner-logo-circle {
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.partner-chip-name {
+  color: var(--text-color);
+}
+
+/* ==========================================================================
+   3. Coursera-Style Clean Category Pill Bar
+   ========================================================================= */
+.coursera-catalog-section {
+  padding: 2.5rem 0 4rem 0;
+}
+
+.coursera-category-bar-wrapper {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 0.5rem 0.65rem;
+  display: inline-block;
+  width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .coursera-category-bar-wrapper {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.coursera-category-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px;
+}
+
+.coursera-cat-pill {
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.coursera-cat-pill:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Active solid dark pill matching Coursera's "Data" pill */
+.coursera-cat-pill.active {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .coursera-cat-pill.active {
+    background: #FFFFFF;
+    color: #0F172A;
+    border-color: #FFFFFF;
+  }
+}
+
+/* ==========================================================================
+   4. Simple Course Cards Grid
+   ========================================================================= */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.75rem;
+}
+
+.coursera-course-card {
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+  background: var(--surface-color);
+}
+
+.coursera-course-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-primary);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.coursera-course-header {
+  height: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 14px;
+}
+
+.course-badge-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.55);
+  color: #FFFFFF;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.course-dur-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111111;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.bg-orange { background: linear-gradient(135deg, #F26522, #FFA07A); }
+.bg-blue   { background: linear-gradient(135deg, #3B82F6, #93C5FD); }
+.bg-green  { background: linear-gradient(135deg, #10B981, #6EE7B7); }
+.bg-teal   { background: linear-gradient(135deg, #14B8A6, #2DD4BF); }
+.bg-purple { background: linear-gradient(135deg, #8B5CF6, #C4B5FD); }
+
+.coursera-course-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.course-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.65rem;
+}
+
+.star-rating {
+  font-weight: 800;
+  color: #F59E0B;
+}
+
+.review-count {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.course-level-pill {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.course-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.course-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.coursera-skills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: auto;
+  margin-bottom: 1.25rem;
+}
+
+.skill-pill {
+  font-size: 0.74rem;
+  font-weight: 500;
+  background: rgba(242, 101, 34, 0.08);
+  color: var(--color-primary);
+  border: 1px solid rgba(242, 101, 34, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.coursera-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.cert-check-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #10B981;
+}
+
+.btn-card-learn {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.btn-card-learn:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   5. Registration Section (Online & In-Person Simple Cards)
+   ========================================================================== */
 section {
-  padding: 5rem 0;
+  padding: 4.5rem 0;
+}
+
+.section-pill-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 0.35rem;
 }
 
 .section-title {
-  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-  margin-bottom: 2.5rem;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
   font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.015em;
 }
 
 .text-center {
@@ -96,12 +465,143 @@ section {
   border-bottom: 1px solid var(--border-color);
 }
 
-/* Top Registration Section */
+.comparison-toggle-btn {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+}
+
+.comparison-table-wrapper {
+  margin: 1.75rem auto;
+  max-width: 900px;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.comparison-table-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.comparison-table th {
+  font-weight: 700;
+}
+
 .registration-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
   margin-top: 2rem;
+}
+
+.registration-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2.25rem;
+  border-radius: 18px;
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
+}
+
+.highlight-card-online {
+  border: 2px solid rgba(242, 101, 34, 0.4);
+}
+
+.highlight-card-inperson {
+  border: 2px solid rgba(59, 130, 246, 0.35);
+}
+
+.card-top-pill {
+  position: absolute;
+  top: -13px;
+  right: 20px;
+  background: var(--color-primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.inperson-pill {
+  background: #3B82F6;
+}
+
+.card-emoji-header {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.card-description {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.card-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.feature-check {
+  color: #10B981;
+  font-weight: bold;
+  margin-right: 0.4rem;
+}
+
+.card-cta-btn {
+  margin-top: auto;
+}
+
+.campus-location-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.85rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  border: 1px solid var(--border-color);
+}
+
+.campus-location-box p {
+  margin: 0 0 0.3rem 0;
+}
+
+.campus-location-box p:last-child {
+  margin: 0;
 }
 
 .quick-hotline-box {
@@ -111,6 +611,8 @@ section {
   justify-content: center;
   gap: 1.25rem;
   flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  border-radius: 14px;
 }
 
 .quick-hotline-btns {
@@ -120,34 +622,38 @@ section {
   justify-content: center;
 }
 
-/* About Snippet */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-}
-
+/* ==========================================================================
+   6. About Snippet & Metrics
+   ========================================================================== */
 .about-text {
   padding: 2.5rem;
-  border-radius: var(--radius-lg);
+  border-radius: 18px;
 }
 
 .metrics {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 1.5rem;
-  margin-top: 2rem;
-  padding-top: 2rem;
+  margin-top: 1.75rem;
+  padding-top: 1.75rem;
   border-top: 1px solid var(--border-color);
 }
 
 .metric h3 {
   font-size: 2.25rem;
   color: var(--color-primary);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
+  font-weight: 800;
 }
 
-/* Why Choose Us */
+.metric p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   7. Why Choose Us Grid
+   ========================================================================== */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -156,15 +662,16 @@ section {
 
 .feature-card {
   padding: 1.5rem;
-  border-radius: var(--radius-lg);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   gap: 1rem;
-  transition: transform var(--transition-normal);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
 }
 
 .feature-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--color-primary);
 }
 
@@ -181,49 +688,29 @@ section {
   flex-shrink: 0;
 }
 
-/* Courses */
-.courses-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 1.75rem;
+.feature-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-.course-card {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.course-image {
-  height: 180px;
-  width: 100%;
-}
-
-.bg-orange { background: linear-gradient(135deg, #F26522, #FFA07A); }
-.bg-blue   { background: linear-gradient(135deg, #3B82F6, #93C5FD); }
-.bg-green  { background: linear-gradient(135deg, #10B981, #6EE7B7); }
-.bg-teal   { background: linear-gradient(135deg, #14B8A6, #2DD4BF); }
-
-.course-content {
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.course-content h3 {
-  font-size: 1.35rem;
-  margin-bottom: 0.75rem;
-}
-
-.mt-4 { margin-top: auto; }
-
-/* Gallery Posters Grid & Image Sizing */
+/* ==========================================================================
+   8. Specialized Posters Showcase
+   ========================================================================== */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.75rem;
+}
+
+.gallery-card {
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+}
+
+.gallery-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
 }
 
 .gallery-card-img-wrap {
@@ -234,116 +721,235 @@ section {
   border-radius: 12px;
 }
 
-/* Founder Spotlight */
+.gallery-card-info {
+  padding: 1.25rem 0.25rem 0.25rem 0.25rem;
+}
+
+/* ==========================================================================
+   9. Founder Spotlight
+   ========================================================================== */
 .founder-grid {
   display: flex;
   align-items: center;
   gap: 2rem;
+  padding: 2.25rem;
+  border-radius: 18px;
 }
 
 .founder-avatar {
-  width: 90px;
-  height: 90px;
-  min-width: 90px;
+  width: 85px;
+  height: 85px;
+  min-width: 85px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--color-primary), #ff8c00);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #fff;
-  box-shadow: 0 8px 20px rgba(242, 101, 34, 0.3);
+  box-shadow: 0 8px 20px rgba(242, 101, 34, 0.35);
 }
 
-/* Testimonials */
+/* ==========================================================================
+   10. Testimonials
+   ========================================================================== */
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 1.75rem;
 }
 
 .testimonial-card {
-  padding: 2rem;
-  border-radius: var(--radius-lg);
-  text-align: center;
-  position: relative;
+  padding: 1.75rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+}
+
+.testimonial-stars {
+  color: #F59E0B;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 2px;
 }
 
 .testimonial-text {
-  font-size: 1.1rem;
+  font-size: 0.98rem;
   font-style: italic;
   margin-bottom: 1.25rem;
   line-height: 1.6;
+  flex-grow: 1;
+}
+
+.testimonial-author-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: auto;
+}
+
+.author-avatar-chip {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(242, 101, 34, 0.2);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
 }
 
 .testimonial-author {
   font-weight: 700;
   color: var(--color-primary);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  margin: 0;
 }
 
-/* CTA Section */
+.testimonial-verified {
+  display: block;
+  font-size: 0.72rem;
+  color: #10B981;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   11. FAQ Accordion
+   ========================================================================== */
+.faq-section {
+  padding: 4.5rem 0;
+}
+
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 800px;
+}
+
+.faq-accordion-item {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.faq-accordion-item:hover,
+.faq-item-open {
+  border-color: var(--color-primary);
+}
+
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.15rem 1.35rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: var(--text-color);
+}
+
+.faq-question-text {
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.4;
+  padding-right: 1rem;
+}
+
+.faq-chevron-icon {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.faq-answer-content {
+  padding: 0 1.35rem 1.25rem 1.35rem;
+  font-size: 0.94rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   12. CTA Section
+   ========================================================================== */
 .cta-section {
-  padding: 5rem 0;
+  padding: 4.5rem 0;
   background: linear-gradient(to right, var(--bg-color), rgba(242, 101, 34, 0.05), var(--bg-color));
 }
 
-/* Comprehensive Mobile Phone Media Queries (320px - 768px) */
+.cta-actions-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-lg {
+  padding: 0.9rem 2rem;
+  font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 960px) {
+  .coursera-hero-card {
+    grid-template-columns: 1fr;
+    padding: 2.75rem 2rem;
+    gap: 2rem;
+    text-align: left;
+  }
+
+  .coursera-student-frame {
+    max-width: 320px;
+  }
+}
+
 @media (max-width: 768px) {
   section {
     padding: 3rem 0;
   }
 
-  .hero {
-    padding: 2.5rem 0 1.5rem 0;
+  .coursera-hero-card {
+    padding: 2.25rem 1.5rem;
+    border-radius: 16px;
   }
 
-  .hero-title {
-    font-size: clamp(1.8rem, 6.5vw, 2.8rem);
+  .coursera-hero-heading {
+    font-size: clamp(1.8rem, 6.5vw, 2.5rem);
   }
 
-  .hero-subtitle {
+  .coursera-hero-desc {
     font-size: 0.98rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
-  .hero-actions {
-    gap: 0.6rem;
+  .coursera-hero-action-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 
-  .hero-actions .btn {
-    font-size: 0.88rem;
-    padding: 0.65rem 1.1rem;
-  }
-
-  .hero-banner-wrap {
-    max-width: 100%;
-    margin-top: 1.5rem;
-  }
-
-  .hero-banner-img {
-    max-height: 220px;
+  .btn-coursera-white {
+    width: 100%;
+    text-align: center;
   }
 
   .about-text {
-    padding: 1.35rem;
+    padding: 1.5rem;
   }
 
   .metrics {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    padding-top: 1.25rem;
-    margin-top: 1.25rem;
-  }
-
-  .metric h3 {
-    font-size: 1.6rem;
-  }
-
-  .metric p {
-    font-size: 0.76rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .gallery-card-img-wrap {
@@ -352,8 +958,6 @@ section {
 
   .quick-hotline-box {
     flex-direction: column;
-    text-align: center;
-    gap: 1rem;
   }
 
   .quick-hotline-btns {
@@ -369,42 +973,23 @@ section {
   .founder-grid {
     flex-direction: column;
     text-align: center;
-    gap: 1.25rem;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .hero-actions .btn {
-    width: 100%;
-    text-align: center;
-  }
-
   .registration-grid {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
   }
 
   .metrics {
     grid-template-columns: 1fr;
-    gap: 0.85rem;
-    text-align: center;
   }
 
   .gallery-grid {
     grid-template-columns: 1fr;
   }
 
-  .gallery-card-img-wrap {
-    height: 180px;
-  }
-
   .courses-grid {
     grid-template-columns: 1fr;
   }
 }
-

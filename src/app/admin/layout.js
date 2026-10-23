@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import AdminSidebarFooter from './AdminSidebarFooter';
 import './admin.css';
 
 export default async function AdminLayout({ children }) {
@@ -21,10 +22,7 @@ export default async function AdminLayout({ children }) {
           <Link href="/admin/inquiries" className="admin-nav-link">📬 Inquiries</Link>
           <Link href="/admin/settings" className="admin-nav-link">⚙️ Settings</Link>
         </nav>
-        <div className="admin-user">
-          <p className="admin-user-name">{session.user.name}</p>
-          <p className="admin-user-role">Administrator</p>
-        </div>
+        <AdminSidebarFooter userName={session.user.name} />
       </aside>
       <main className="admin-main">{children}</main>
     </div>

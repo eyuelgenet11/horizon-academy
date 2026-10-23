@@ -99,13 +99,24 @@ async function getCatalogData(userId) {
   }
 }
 
-export default async function CoursesPage() {
+export default async function CoursesPage({ searchParams }) {
+  const resolvedParams = await searchParams;
+  const q = (resolvedParams?.q || '').toLowerCase();
   const session = await auth();
   const userId = session?.user?.id;
   const { courses, enrolledCourseIds } = await getCatalogData(userId);
 
-  const unlockedCourses = courses.filter(c => enrolledCourseIds.has(c.id));
-  const availableCourses = courses.filter(c => !enrolledCourseIds.has(c.id));
+  const filterFn = (c) => {
+    if (!q) return true;
+    return (
+      c.title?.toLowerCase().includes(q) ||
+      c.description?.toLowerCase().includes(q) ||
+      c.level?.toLowerCase().includes(q)
+    );
+  };
+
+  const unlockedCourses = courses.filter(c => enrolledCourseIds.has(c.id)).filter(filterFn);
+  const availableCourses = courses.filter(c => !enrolledCourseIds.has(c.id)).filter(filterFn);
 
   return (
     <div className="courses-page">

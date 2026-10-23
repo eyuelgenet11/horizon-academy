@@ -1,7 +1,13 @@
 'use client';
+import { usePathname } from 'next/navigation';
 import './WhatsAppButton.css';
 
 export default function WhatsAppButton({ phoneNumber = '251977787358', message = 'Hello! I am interested in Horizon Center of Foreign Languages and Computer Training.' }) {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
